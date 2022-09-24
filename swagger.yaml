@@ -1,0 +1,53 @@
+definitions:
+  Flight:
+    items:
+      type: string
+    type: array
+    x-go-package: github.com/Javlopez/volume-assessment/calculate
+  FlightPaths:
+    properties:
+      flight_paths:
+        format: int64
+        type: integer
+        x-go-name: FlightPaths
+      source:
+        $ref: '#/definitions/FlightsParams'
+    type: object
+    x-go-package: github.com/Javlopez/volume-assessment/calculate
+  FlightsParams:
+    properties:
+      flights:
+        items:
+          $ref: '#/definitions/Flight'
+        type: array
+        x-go-name: Flights
+      route:
+        items:
+          type: string
+        type: array
+        x-go-name: Route
+    type: object
+    x-go-package: github.com/Javlopez/volume-assessment/calculate
+info: {}
+paths:
+  /calculate:
+    post:
+      description: Calculate the flight paths
+      operationId: paramsFlights
+      parameters:
+      - description: Execute a calculation of flights
+        in: body
+        name: Body
+        schema:
+          $ref: '#/definitions/FlightsParams'
+      responses:
+        "200":
+          $ref: '#/responses/apiCalculateSuccessResponse'
+      tags:
+      - flights
+responses:
+  apiCalculateSuccessResponse:
+    description: Successful calculation flights response.
+    schema:
+      $ref: '#/definitions/FlightPaths'
+swagger: "2.0"
